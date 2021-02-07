@@ -4,8 +4,16 @@
 // For example, sumAll([4,1]) should return 10 because sum of all the numbers between 1 and 4 (both inclusive) is 10.
 
 function sumAll(arr) {
-    return 1;
-  }
+  var max = Math.max(arr[0], arr[1]);
+  var min = Math.min(arr[0], arr[1]);
+  var temp = 0;
+
+for(var i = min; i <= max; i++){
+  temp += i;
+}
+return temp;
+
+}
   
   sumAll([1, 4]);
 
@@ -16,6 +24,16 @@ function sumAll(arr) {
 // You can return the array with its elements in any order.
 function diffArray(arr1, arr2) {
     var newArr = [];
+   function onlyInFirst(first, second){
+     //Looping through arrays to find values that don't exist in the other
+     for(var i = 0; i < first.length; i++){
+      if(second.indexOf(first[i]) === -1){
+        newArr.push(first[i]);
+      }
+     }
+   }
+onlyInFirst(arr1, arr2);
+onlyInFirst(arr2,arr1);
     return newArr;
   }
   
@@ -28,7 +46,19 @@ function diffArray(arr1, arr2) {
 // You have to use the arguments object.
 
 function destroyer(arr) {
-    return arr;
+var args = Array.prototype.slice.call(arguments);
+//Loops over the array
+for(var i = 0; i < arr.length; i++){
+  // Loops over the arguments
+  for(var j=0; j < args.length; j++){
+    if (arr[i]=== args[j]){
+      delete arr[i];
+    }
+  }
+}
+return arr.filter(Boolean)
+
+
   }
   
   destroyer([1, 2, 3, 1, 2, 3], 2, 3);
@@ -40,20 +70,29 @@ function destroyer(arr) {
 // For example, if the first argument is [{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], and the second argument is { last: "Capulet" }, then you must return the third object from the array (the first argument), because it contains the name and its value, that was passed on as the second argument.
 
 function whatIsInAName(collection, source) {
-    var arr = [];
-    // Only change code below this line
-  
-  
-    // Only change code above this line
-    return arr;
+  var srcKeys = Object.keys(source);
+
+return collection.filter(function(obj){
+  for(var i = 0; i < srcKeys.length; i++){
+    if(
+      !obj.hasOwnProperty(srcKeys[i])  || obj[srcKeys[i]] !== source[srcKeys[i]]
+    ){
+      return false;
+    }
   }
+  return true;
+});
+
+}
   
-  whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" });
+  whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Morales" });
 
 //   5.Intermediate Algorithm Scripting: Spinal Tap Case
 //   Convert a string to spinal case. Spinal case is all-lowercase-words-joined-by-dashes.
 function spinalCase(str) {
-    return str;
+str = str.replace(/([a-z])([A-Z])/g, "$1 $2");
+
+    return str.toLowerCase().split(/(?:_| )+/).join('-')
   }
   
   spinalCase('This Is Spinal Tap');
@@ -69,7 +108,10 @@ function spinalCase(str) {
 
 // Translate the provided string to Pig Latin. Input strings are guaranteed to be English words in all lowercase.
 function translatePigLatin(str) {
-    return str;
+  let consonantRegex = /^[^aeiou]+/;
+  let myConsonants = str.match(consonantRegex);
+
+    return myConsonants !== null ? str.replace(consonantRegex, "").concat(myConsonants).concat('ay') : str.concat('way');
   }
   
   translatePigLatin("consonant");
@@ -88,7 +130,17 @@ function translatePigLatin(str) {
 // Preserve the case of the first character in the original word when you are replacing it. For example if you mean to replace the word "Book" with the word "dog", it should be replaced as "Dog"
 
 function myReplace(str, before, after) {
-    return str;
+  //Looks for the index of the second argument inside of the str
+ var index = str.indexOf(before);
+ if(str[index] === str[index].toUpperCase()){
+   //Changes the after word to be capitalized before it's used
+   after = after.charAt(0).toUpperCase() + after.slice(1)
+ } else {
+ //Change the after word to be lowercased before it's used
+   after = after.charAt(0).toLowerCase() + after.slice(1);
+ }
+  str = str.replace(before, after)
+  return str;
   }
   
   myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped");
@@ -107,7 +159,19 @@ function myReplace(str, before, after) {
 
 // The character and its pair are paired up in an array, and all the arrays are grouped into one encapsulating array.
 function pairElement(str) {
-    return str;
+    var paired = [];
+
+    var search = function(char){
+      switch(char){
+        case "A":
+          paired.push(["A", "T"]);
+          break;
+      }
+
+
+
+
+    }
   }
   
   pairElement("GCG");
